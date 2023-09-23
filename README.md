@@ -110,14 +110,14 @@ Let $A$ and $B$ be languages:
 
 - Union: $A \cup B = \\{w \mid w \in A \text{ or } w \in B\\}$
 - Concatenation: $A \cdot B = \\{xy \mid x \in A \text{ and } y \in B\\}$
-- Star: $A^{*} = \\{x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0\\}$ Note: $\varepsilon \in A^{*}$
+- Star: $A^{\\*} = \\{x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0\\}$ Note: $\varepsilon \in A^{\\*}$
 
 Example:
 
 Let $A$ = {good, bad} and $B$ = {boy, girl}
 - $A \cup B$ = {good, bad, boy, girl}
 - $AB$ = {goodboy, goodgirl, badboy, badgirl}
-- $A^{*}$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
+- $A^{\\*}$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
 
 **Regular expressions**
 
@@ -126,9 +126,9 @@ Let $A$ = {good, bad} and $B$ = {boy, girl}
 
 Examples:
 
-- $(0 \cup 1)^{*} = \Sigma^{*}$ gives all strings over $\Sigma$
-- $\Sigma^{*}1$ gives all strings that end with 1
-- $\Sigma^{*}11\Sigma^{*}$ gives all strings that contain 11
+- $(0 \cup 1)^{\\*} = \Sigma^{\\*}$ gives all strings over $\Sigma$
+- $\Sigma^{\\*}1$ gives all strings that end with 1
+- $\Sigma^{\\*}11\Sigma^{\\*}$ gives all strings that contain 11
 
 ## Closure Properties for Regular Languages
 
