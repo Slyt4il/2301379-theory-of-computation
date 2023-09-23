@@ -21,7 +21,7 @@
 
 Computation process: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
 
-$M_{1}$ accepts exactly those strings in $A$ where $A = {w \mid w \text{ contains substring } 11}$
+$M_{1}$ accepts exactly those strings in $A$ where $A = \{w \mid w \text{ contains substring } 11\}$
 
 We say that $A$ is the language of $M_{1}$ and that $M_{1}$ recognizes $A$ and that $A = L(M_{1})$.
 
@@ -171,7 +171,6 @@ $M$ should accept input $w$ if $w = xy$ where $M_{1}$ accepts $x$ and $M_{2}$ ac
 **Strategy**: to be continued...
 
 ---
-
 Notes for Chulalongkorn University 2301379 Theory of Computation (2566/1) with additional materials from:
 
 Prof. Michael Sipser. Theory Of Computation. Fall 2020. Massachusetts Institute of Technology: MIT OpenCouseWare, https://ocw.mit.edu/. License: Creative Commons BY-NC-SA.
