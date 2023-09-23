@@ -2,16 +2,16 @@
 
 ![CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-yellow.svg)
 
-##### Table of Contents
+## Table of Contents
 - [Midterm](#midterm)
-    - [Finite Automata](#finite-automata)
-        - [Formal definition](#formal-definition)
-        - [Computation](#computation)
-    - [Regular Languages](#regular-languages)
-    - [Regular Expressions](#regular-expressions)
-    - [Closure Properties for Regular Languages](#closure-properties-for-regular-languages)
+  - [Finite Automata](#finite-automata)
+    - [Formal definition](#formal-definition)
+    - [Computation](#computation)
+  - [Regular Languages](#regular-languages)
+  - [Regular Expressions](#regular-expressions)
+  - [Closure Properties for Regular Languages](#closure-properties-for-regular-languages)
 
-## Finite Automata ##
+## Finite Automata
 
 ![finite automata](images/fa01.png)
 
@@ -21,11 +21,11 @@
 
 Computation process: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
 
-$M_{1}$ accepts exactly those strings in $A$ where $A = \{w \ | \ w \ contains \ substring \ 11\}$
+$M_{1}$ accepts exactly those strings in $A$ where $A = \{w \mid w \text{ contains substring } 11\}$
 
 We say that $A$ is the language of $M_{1}$ and that $M_{1}$ recognizes $A$ and that $A = L(M_{1})$.
 
-### Formal definition ###
+### Formal definition
 
 **Definition**: A finite automaton $M$ is a 5-tuple $(Q, \Sigma, \delta, q_{0}, F)$
 
@@ -45,7 +45,7 @@ We can describe $M_{1}$ above with the following notation:
 
 $M_{1} = (Q, \Sigma, \delta, q_{1}, F)$
 
-$Q = \{{q_{1}, q_{2}, q_{3}}\}$
+$Q = \{q_{1}, q_{2}, q_{3}\}$
 
 $\Sigma = \{0, 1\}$
 
@@ -53,14 +53,13 @@ $F = \{q_{3}\}$
 
 $\delta =$ 
 
-|         |         |         |
-| :-----: | :-----: | :-----: |
 |         | 0       | 1       |
+| :-----: | :-----: | :-----: |
 | $q_{1}$ | $q_{1}$ | $q_{2}$ |
 | $q_{2}$ | $q_{1}$ | $q_{3}$ |
 | $q_{3}$ | $q_{3}$ | $q_{3}$ |
 
-### Computation ###
+### Computation
 
 **Strings and languages**
 
@@ -69,61 +68,61 @@ $\delta =$
 - The *empty string* $\varepsilon$ is the string of length 0
 - The *empty language* $\varnothing$ is the set with no strings
 
-**Definition**: $M$ accepts string $w = w_{1} w_{2} ... w_{n}$ each $w_{i} \in \Sigma$ if there is a sequence of states $r_{0},r_{1},r_{2},...,r_{n} \in Q$
+**Definition**: $M$ accepts string $w = w_{1} w_{2} \ldots w_{n}$ each $w_{i} \in \Sigma$ if there is a sequence of states $r_{0}, r_{1}, r_{2}, \ldots, r_{n} \in Q$
 where:
 - $r_{0} = q_{0}$
-- $r_{i} = \delta(r+{i-1},w_{i})$ for $1 \leq i \leq n$
+- $r_{i} = \delta(r_{i-1}, w_{i})$ for $1 \leq i \leq n$
 - $r_{n} \in F$
 
 **Recognizing languages**
 
-- $L(M) = \{w \ | \ M \ accepts \ w\}$
+- $L(M) = \{w \mid M \text{ accepts } w\}$
 - $L(M)$ is the language of $M$
 - $M$ recognizes $L(M)$
 
 **Definition**: A language is *regular* if some finite automaton recognizes it.
 
-## Regular Languages ##
+## Regular Languages
 
 ![regular languages example](images/fa03.png)
 
-$L(M_{1}) = \{w \ | \ w \ contains \ substring \ 11\} = A$
+$L(M_{1}) = \{w \mid w \text{ contains substring } 11\} = A$
 
 $\therefore A$ is regular
 
 Examples:
 
-Let $B = \{w \ | \ w \ has \ an \ even \ number \ of \ 1s\}$
+Let $B = \{w \mid w \text{ has an even number of 1s}\}$
 
 $B$ is regular
 
-Let $C = \{w \ | \ w \ has \ equal \ numbers \ of \ 0s \ and \ 1s\}$
+Let $C = \{w \mid w \text{ has equal numbers of 0s and 1s}\}$
 
 $C$ is not regular
 
 There is no way to recognize $C$ with a finite automaton.
 
-## Regular Expressions ##
+## Regular Expressions
 
 **Regular operations**
 
-Let $A,B$ be languages:
+Let $A$ and $B$ be languages:
 
-- Union: $A \cup B = \{w \ | \ w \in A \ or \ w \in B\}$
-- Concatenation: $A \cdot B = \{xy \ | \ x \in A \ and \ y \in B\}$
-- Star: $A^{*} = \{x_{1}...x_{k} \ | \ each \ x_{i} \in A \ for \ k \geq 0\}$ Note: $\varepsilon \in A^{*}$
+- Union: $A \cup B = \{w \mid w \in A \text{ or } w \in B\}$
+- Concatenation: $A \cdot B = \{xy \mid x \in A \text{ and } y \in B\}$
+- Star: $A^{*} = \{x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0\}$ Note: $\varepsilon \in A^{*}$
 
 Example:
 
 Let $A$ = {good, bad} and $B$ = {boy, girl}
 - $A \cup B$ = {good, bad, boy, girl}
 - $AB$ = {goodboy, goodgirl, badboy, badgirl}
-- $A^{*}$ = {$ \varepsilon $, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
+- $A^{*}$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
 
 **Regular expressions**
 
-- Built from $\Sigma, \ members \ \Sigma, \varnothing, \varepsilon$ (Atomic)
-- By using $\cup, \cdot, *$ (Composite)
+- Built from $\Sigma$, members $\Sigma$, $\varnothing$, $\varepsilon$ (Atomic)
+- By using $\cup$, $\cdot$, $*$ (Composite)
 
 Examples:
 
@@ -131,9 +130,9 @@ Examples:
 - $\Sigma^{*}1$ gives all strings that end with 1
 - $\Sigma^{*}11\Sigma^{*}$ gives all strings that contain 11
 
-## Closure Properties for Regular Languages ##
+## Closure Properties for Regular Languages
 
-**Theorem**: If $A_{1}, A_{2}$ are regular languages, so is $A_{1} \cup A_{2}$ *(closure under union)*
+**Theorem**: If $A_{1}$ and $A_{2}$ are regular languages, so is $A_{1} \cup A_{2}$ *(closure under union)*
 
 *When a collection of objects is said to be closed under an operation, it means that applying that operation to the objects results in objects that still belong to the same class of objects.*
 
@@ -151,15 +150,15 @@ $M$ should accept input $w$ if either $M_{1}$ or $M_{2}$ accept $w$.
 
 **Components of $M$**:
 
-$Q = Q_{1} \times Q_{2} = \{(q_{1},q_{2}) \ | \ q_{1} \in Q_{1} \ and \ q_{2} \in Q_{2}\}$
+$Q = Q_{1} \times Q_{2} = \{(q_{1}, q_{2}) \mid q_{1} \in Q_{1} \text{ and } q_{2} \in Q_{2}\}$
 
-$q_{0} = (q_{1},q_{2})$
+$q_{0} = (q_{1}, q_{2})$
 
-$\delta((q,r),a) = (\delta_{1}(q,a),\delta_{2}(r,a))$
+$\delta((q, r), a) = (\delta_{1}(q, a), \delta_{2}(r, a))$
 
 $F = (F_{1} \times Q_{2}) \cup (Q_{1} \times F_{2})$
 
-**Theorem**: If $A_{1}, A_{2}$ are regular languages, so is $A_{1}A_{2}$ *(closure under concatenation)*
+**Theorem**: If $A_{1}$ and $A_{2}$ are regular languages, so is $A_{1}A_{2}$ *(closure under concatenation)*
 
 Let $M_{1} = (Q_{1}, \Sigma_{1}, \delta, q_{1}, F_{1})$ recognize $A_{1}$
 
