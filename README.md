@@ -21,7 +21,7 @@
 
 Computation process: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
 
-$M_{1}$ accepts exactly those strings in $A$ where $A = \\{w \mid w \text{ contains substring } 11\\}$
+$M_{1}$ accepts exactly those strings in $A$ where $` A = \{w \mid w \text{ contains substring } 11\} `$
 
 We say that $A$ is the language of $M_{1}$ and that $M_{1}$ recognizes $A$ and that $A = L(M_{1})$.
 
@@ -45,11 +45,11 @@ We can describe $M_{1}$ above with the following notation:
 
 $M_{1} = (Q, \Sigma, \delta, q_{1}, F)$
 
-$Q = \\{q_{1}, q_{2}, q_{3}\\}$
+$` Q = \{q_{1}, q_{2}, q_{3}\} `$
 
-$\Sigma = \\{0, 1\\}$
+$` \Sigma = \{0, 1\} `$
 
-$F = \\{q_{3}\\}$
+$` F = \{q_{3}\} `$
 
 $\delta =$ 
 
@@ -76,7 +76,7 @@ where:
 
 **Recognizing languages**
 
-- $L(M) = \\{w \mid M \text{ accepts } w\\}$
+- $` L(M) = \{w \mid M \text{ accepts } w\} `$
 - $L(M)$ is the language of $M$
 - $M$ recognizes $L(M)$
 
@@ -86,17 +86,17 @@ where:
 
 ![regular languages example](images/fa03.png)
 
-$L(M_{1}) = \\{w \mid w \text{ contains substring } 11\\} = A$
+$` L(M_{1}) = \{w \mid w \text{ contains substring } 11\} = A `$
 
 $\therefore A$ is regular
 
 Examples:
 
-Let $B = \\{w \mid w \text{ has an even number of 1s}\\}$
+Let $` B = \{w \mid w \text{ has an even number of 1s}\} `$
 
 $B$ is regular
 
-Let $C = \\{w \mid w \text{ has equal numbers of 0s and 1s}\\}$
+Let $` C = \{w \mid w \text{ has equal numbers of 0s and 1s}\} `$
 
 $C$ is not regular
 
@@ -108,16 +108,16 @@ There is no way to recognize $C$ with a finite automaton.
 
 Let $A$ and $B$ be languages:
 
-- Union: $A \cup B = \\{w \mid w \in A \text{ or } w \in B\\}$
-- Concatenation: $A \cdot B = \\{xy \mid x \in A \text{ and } y \in B\\}$
-- Star: $A^{\*} = \\{x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0\\}$ Note: $\varepsilon \in A^{\*}$
+- Union: $` A \cup B = \{w \mid w \in A \text{ or } w \in B\} `$
+- Concatenation: $` A \cdot B = \{xy \mid x \in A \text{ and } y \in B\} `$
+- Star: $` A^{*} = \{x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0\} `$ Note: $` \varepsilon \in A^{*} `$
 
 Example:
 
 Let $A$ = {good, bad} and $B$ = {boy, girl}
 - $A \cup B$ = {good, bad, boy, girl}
 - $AB$ = {goodboy, goodgirl, badboy, badgirl}
-- $A^{\*}$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
+- $` A^{*} `$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
 
 **Regular expressions**
 
@@ -126,9 +126,9 @@ Let $A$ = {good, bad} and $B$ = {boy, girl}
 
 Examples:
 
-- $(0 \cup 1)^{\*} = \Sigma^{\*}$ gives all strings over $\Sigma$
-- $\Sigma^{\*}1$ gives all strings that end with 1
-- $\Sigma^{\*}11\Sigma^{\*}$ gives all strings that contain 11
+- $` (0 \cup 1)^{*} = \Sigma^{*} `$ gives all strings over $\Sigma$
+- $` \Sigma^{*}1 `$ gives all strings that end with 1
+- $` \Sigma^{*}11\Sigma^{*} `$ gives all strings that contain 11
 
 ## Closure Properties for Regular Languages
 
@@ -171,6 +171,7 @@ $M$ should accept input $w$ if $w = xy$ where $M_{1}$ accepts $x$ and $M_{2}$ ac
 **Strategy**: to be continued...
 
 ---
+
 Notes for Chulalongkorn University 2301379 Theory of Computation (2566/1) with additional materials from:
 
 Prof. Michael Sipser. Theory Of Computation. Fall 2020. Massachusetts Institute of Technology: MIT OpenCouseWare, https://ocw.mit.edu/. License: Creative Commons BY-NC-SA.
