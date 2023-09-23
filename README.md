@@ -13,7 +13,7 @@
 
 ## Finite Automata ##
 
-![finite automata](images\fa01.png)
+![finite automata](images/fa01.png)
 
 **Input**: finite string
 
@@ -21,7 +21,7 @@
 
 Computation process: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
 
-$M_{1}$ accepts exactly those strings in $A$ where $A ={\{w|w~contains~substring~11\}}$
+$M_{1}$ accepts exactly those strings in $A$ where $A = \{w \ | \ w \ contains \ substring \ 11\}$
 
 We say that $A$ is the language of $M_{1}$ and that $M_{1}$ recognizes $A$ and that $A = L(M_{1})$.
 
@@ -35,7 +35,7 @@ $\Sigma$ - finite set of alphabet symbols
 
 $\delta$ - transition function $\delta: Q \times \Sigma \rightarrow Q$ 
 
-![transition function](images\fa02.png)
+![transition function](images/fa02.png)
 
 $q_{0}$ - start state
 
@@ -77,7 +77,7 @@ where:
 
 **Recognizing languages**
 
-- $L(M) = \{w|M~accepts~w\}$
+- $L(M) = \{w \ | \ M \ accepts \ w\}$
 - $L(M)$ is the language of $M$
 - $M$ recognizes $L(M)$
 
@@ -85,19 +85,19 @@ where:
 
 ## Regular Languages ##
 
-![regular languages example](images\fa03.png)
+![regular languages example](images/fa03.png)
 
-$L(M_{1}) = \{w|w~contains~substring~11\} = A$
+$L(M_{1}) = \{w \ | \ w \ contains \ substring \ 11\} = A$
 
 $\therefore A$ is regular
 
 Examples:
 
-Let $B = \{w|w~has~an~even~number~of~1s\}$
+Let $B = \{w \ | \ w \ has \ an \ even \ number \ of \ 1s\}$
 
 $B$ is regular
 
-Let $C = \{w|w~has~equal~numbers~of~0s~and~1s\}$
+Let $C = \{w \ | \ w \ has \ equal \ numbers \ of \ 0s \ and \ 1s\}$
 
 $C$ is not regular
 
@@ -109,20 +109,20 @@ There is no way to recognize $C$ with a finite automaton.
 
 Let $A,B$ be languages:
 
-- Union: $A \cup B = \{w|w \in A~or~w \in B\}$
-- Concatenation: $A \cdot B = \{xy|x \in A~and~y \in B\}$
-- Star: $A^{*} = \{x_{1}...x_{k}|~each~x_{i} \in A~for~k \geq 0\}$ Note: $\varepsilon \in A^{*}$
+- Union: $A \cup B = \{w \ | \ w \in A \ or \ w \in B\}$
+- Concatenation: $A \cdot B = \{xy \ | \ x \in A \ and \ y \in B\}$
+- Star: $A^{*} = \{x_{1}...x_{k} \ | \ each \ x_{i} \in A \ for \ k \geq 0\}$ Note: $\varepsilon \in A^{*}$
 
 Example:
 
 Let $A$ = {good, bad} and $B$ = {boy, girl}
 - $A \cup B$ = {good, bad, boy, girl}
 - $AB$ = {goodboy, goodgirl, badboy, badgirl}
-- $A^{*}$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
+- $A^{*}$ = {$ \varepsilon $, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
 
 **Regular expressions**
 
-- Built from $\Sigma,~members~\Sigma, \varnothing, \varepsilon$ (Atomic)
+- Built from $\Sigma, \ members \ \Sigma, \varnothing, \varepsilon$ (Atomic)
 - By using $\cup, \cdot, *$ (Composite)
 
 Examples:
@@ -151,7 +151,7 @@ $M$ should accept input $w$ if either $M_{1}$ or $M_{2}$ accept $w$.
 
 **Components of $M$**:
 
-$Q = Q_{1} \times Q_{2} = \{(q_{1},q_{2})|~q_{1} \in Q_{1}~and~q_{2} \in Q_{2}\}$
+$Q = Q_{1} \times Q_{2} = \{(q_{1},q_{2}) \ | \ q_{1} \in Q_{1} \ and \ q_{2} \in Q_{2}\}$
 
 $q_{0} = (q_{1},q_{2})$
 
