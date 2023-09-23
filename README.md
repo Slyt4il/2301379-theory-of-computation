@@ -21,7 +21,7 @@
 
 Computation process: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
 
-$M_{1}$ accepts exactly those strings in $A$ where $A = \\{w \mid w \text{ contains substring } 11\\}$
+$M_{1}$ accepts exactly those strings in $A$ where $A = {w \mid w \text{ contains substring } 11}$
 
 We say that $A$ is the language of $M_{1}$ and that $M_{1}$ recognizes $A$ and that $A = L(M_{1})$.
 
@@ -45,11 +45,11 @@ We can describe $M_{1}$ above with the following notation:
 
 $M_{1} = (Q, \Sigma, \delta, q_{1}, F)$
 
-$Q = \{q_{1}, q_{2}, q_{3}\}$
+$Q = {q_{1}, q_{2}, q_{3}}$
 
-$\Sigma = \{0, 1\}$
+$\Sigma = {0, 1}$
 
-$F = \{q_{3}\}$
+$F = {q_{3}}$
 
 $\delta =$ 
 
@@ -76,7 +76,7 @@ where:
 
 **Recognizing languages**
 
-- $L(M) = \{w \mid M \text{ accepts } w\}$
+- $L(M) = {w \mid M \text{ accepts } w}$
 - $L(M)$ is the language of $M$
 - $M$ recognizes $L(M)$
 
@@ -86,17 +86,17 @@ where:
 
 ![regular languages example](images/fa03.png)
 
-$L(M_{1}) = \{w \mid w \text{ contains substring } 11\} = A$
+$L(M_{1}) = {w \mid w \text{ contains substring } 11} = A$
 
 $\therefore A$ is regular
 
 Examples:
 
-Let $B = \{w \mid w \text{ has an even number of 1s}\}$
+Let $B = {w \mid w \text{ has an even number of 1s}}$
 
 $B$ is regular
 
-Let $C = \{w \mid w \text{ has equal numbers of 0s and 1s}\}$
+Let $C = {w \mid w \text{ has equal numbers of 0s and 1s}}$
 
 $C$ is not regular
 
@@ -108,9 +108,9 @@ There is no way to recognize $C$ with a finite automaton.
 
 Let $A$ and $B$ be languages:
 
-- Union: $A \cup B = \{w \mid w \in A \text{ or } w \in B\}$
-- Concatenation: $A \cdot B = \{xy \mid x \in A \text{ and } y \in B\}$
-- Star: $A^{*} = \{x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0\}$ Note: $\varepsilon \in A^{*}$
+- Union: $A \cup B = {w \mid w \in A \text{ or } w \in B}$
+- Concatenation: $A \cdot B = {xy \mid x \in A \text{ and } y \in B}$
+- Star: $A^{*} = {x_{1}\ldots x_{k} \mid \text{each } x_{i} \in A \text{ for } k \geq 0}$ Note: $\varepsilon \in A^{*}$
 
 Example:
 
@@ -150,7 +150,7 @@ $M$ should accept input $w$ if either $M_{1}$ or $M_{2}$ accept $w$.
 
 **Components of $M$**:
 
-$Q = Q_{1} \times Q_{2} = \{(q_{1}, q_{2}) \mid q_{1} \in Q_{1} \text{ and } q_{2} \in Q_{2}\}$
+$Q = Q_{1} \times Q_{2} = {(q_{1}, q_{2}) \mid q_{1} \in Q_{1} \text{ and } q_{2} \in Q_{2}}$
 
 $q_{0} = (q_{1}, q_{2})$
 
