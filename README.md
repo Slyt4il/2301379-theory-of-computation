@@ -117,7 +117,7 @@ Example:
 Let $A$ = {good, bad} and $B$ = {boy, girl}
 - $A \cup B$ = {good, bad, boy, girl}
 - $AB$ = {goodboy, goodgirl, badboy, badgirl}
-- $` A^{*} `$ = {$\varepsilon$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
+- $` A^{*} `$ = {$` \varepsilon `$, good, bad, goodgood, goodbad, badgood, badbad, goodgoodgood, goodgoodbad, ... }
 
 **Regular expressions**
 
