@@ -10,6 +10,11 @@
   - [Regular Languages](#regular-languages)
   - [Regular Expressions](#regular-expressions)
   - [Closure Properties for Regular Languages](#closure-properties-for-regular-languages)
+  - [Nondeterministic Finite Automata](#nondeterministic-finite-automata)
+    - [Formal definition](#formal-definition-1)
+  - [Converting NFAs to DFAs](#converting-nfas-to-dfas)
+  - [Converting Regular Expressions to NFA](#converting-regular-expressions-to-nfa)
+
 
 ## Finite Automata
 
@@ -19,7 +24,7 @@
 
 **Output**: *Accept* or *Reject*
 
-Computation process: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
+**Computation process**: Begin at **start state**, read input symbols, follow corresponding transitions, **accept** if end with accept state, **reject** if not.
 
 $M_{1}$ accepts exactly those strings in $A$ where $` A = \{w \mid w \text{ contains substring } 11\} `$
 
@@ -168,7 +173,131 @@ Construct $M = (Q, \Sigma, \delta, q_{0}, F)$ recognizing $A_{1}A_{2}$
 
 $M$ should accept input $w$ if $w = xy$ where $M_{1}$ accepts $x$ and $M_{2}$ accepts $y$.
 
-**Strategy**: to be continued...
+**Strategy**: $M$ has to split the input $w$ in a way that it gets accepted by both machines without being able to see the future. -> Use ***nondeterminism***.
+
+##  Nondeterministic Finite Automata
+
+![regular languages example](images/nfa01.png)
+
+NFAs can have multiple possible transitions for each input symbol (including none at all), unlike DFAs which require a single unique transition for each input symbol.
+
+- multiple paths possible (0, 1 or many)
+- $\varepsilon$-transition is a "free" move without reading input.
+- Accept input if *some* path leads to an accepting state. (acceptance overrules rejection)
+
+**Computation process**: Begin at start state and read input symbols. Now, there might be two different paths to follow. Keep track of both of them. The machine can be thought of as being in two states simultaneously. Next, read the next symbol and take each of the places where the machine could be at the end of the previous symbol, then follow the paths from those states. If it has nowhere to go, that branch ends. If it has a way to go, and the next state has an empty string $(\varepsilon)$ symbol on its transition arrow, the machine can either stay or move along that arrow without reading an input.
+
+Example inputs:
+- ab -> ***Accept***
+- aa -> ***Reject***
+- aba -> ***Accept***
+- abb -> ***Reject***
+
+Nondeterminism does not correspond to a physical machine we can build. However, it is useful mathematically.
+
+### Formal definition
+
+**Definition**: A nondeterministic finite automaton (NFA) $N$ is a 5-tuple $(Q, \Sigma, \delta, q_{0}, F)$
+
+$Q$ - finite set of states
+
+$\Sigma$ - finite set of alphabet symbols
+
+$\delta$ - transition function $` \delta: Q \times \Sigma_{\varepsilon} \rightarrow \mathcal{P}(Q) = \{R \mid R \subseteq Q \} `$
+
+Note: $` \Sigma_{\varepsilon} = \Sigma \cup {\varepsilon} `$ , $\mathcal{P}$ = power set
+
+$q_{0}$ - start state
+
+$F$ - set of accept states
+
+We can describe the transition function of $N_{1}$ above as follows:
+
+$` \delta(q_{1},a) = \{q_{1}, q_{2} \} `$
+
+$` \delta(q_{1},b) = \varnothing `$
+
+Ways to think about nondeterminism:
+
+*Computational*: Fork new parallel thread and accept if any thread leads to an accepting state.
+
+*Mathematical*: Tree with branches. Accept if any branch leads to an accepting state.
+
+*Magical*: Guess at each nondeterministic step which way to go. Machine always makes the right guess that leads to an accepting state, if possible.
+
+## Converting NFAs to DFAs
+
+**Theorem**: an NFA recognizes $A$, then $A$ is regular.
+
+**Proof**:
+
+Let NFA $M = (Q, \Sigma, \delta, q_{0}, F)$ recognize $A$
+
+Construct DFA $M' = (Q', \Sigma, \delta', q'_{0}, F')$ recognizing $A$ (ignore $\varepsilon$-moves)
+
+**IDEA**: DFA $M'$ keeps track of the subset of possible states in NFA $M$.
+
+Construction of $M'$:
+
+$Q' = \mathcal{P}(Q)$
+
+$` \delta'(R,a) = \{q \mid q \in \delta(r,a) \text{ for some } r \in R \} `$
+
+$` q'_{0} = \{q_{0}\} `$
+
+$` F' = \{R \in Q' | R \text{ intersects } F\} `$
+
+**Return to Closure Properties**
+
+**Recall Theorem**: If $A_{1}$ and $A_{2}$ are regular languages, so is $A_{1} \cup A_{2}$ *(closure under union)*
+
+**New Proof (sketch)**:
+
+Given DFAs $M_{1}$ and $M_{2}$ recognizing $A_{1}$ and $A_{2}$
+
+Construct NFA M recognizing $A_{1} \cup A_{2}$
+
+**Strategy**: Use $\varepsilon$-moves to run both $M_{1}$ and $M_{2}$ in parallel.
+
+![nfaclosureunion](images/nfa02.png)
+
+**Theorem**: If $A_{1}$ and $A_{2}$ are regular languages, so is $A_{1}A_{2}$ *(closure under concatenation)*
+
+**Proof sketch**:
+
+Given DFAs $M_{1}$ and $M_{2}$ recognizing $A_{1}$ and $A_{2}$
+
+Construct NFA M recognizing $A_{1}A_{2}$
+
+$M$ should accept input $w$ if $w = xy$ where $M_{1}$ accepts $x$ and $M_{2}$ accepts $y$.
+
+Nondeterministic $M'$ has the option to jump to $M_{2}$ when $M_{1}$ accepts. It can both stay in $M_{1}$ to continue reading more of the input and start processing what might be the second half of the input which $M_{2}$ accepts.
+
+![nfaclosureconcatenation](images/nfa03.png)
+
+**Theorem**: If $A$ is a regular language, so is $` A^{*} `$ *(closure under star)*
+
+**Proof sketch**:
+
+Given DFA $M$ recognizing $A$
+
+Construct NFA $M'$ recognizing $` A^{*} `$
+
+$M$ should accept input $w$ if $w = x_{1}x_{2} \ldots x_{k}$ where $k \geq 0$ and $M$ accepts each $x_{i}$
+
+**Strategy**: Start machine again when $M$ accepts by using $\varepsilon$-moves to allow an option to move back to the start state or continue processing. Make sure $M'$ accepts $\varepsilon$ by making a start state that is also an accepting state that will never be returned to before branching to the start state of $M$.
+
+![nfaclosureconcatenation](images/nfa04.png)
+
+## Converting Regular Expressions to NFA
+
+**Theorem**: If $R$ is a regular expression, and $A = L(R)$, then $A$ is regular.
+
+**Proof**:
+
+Convert $R$ to equivalent of NFA $M$:
+
+![regextonfa](images/nfa05.png)
 
 ---
 
