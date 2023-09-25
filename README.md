@@ -635,6 +635,10 @@ $` \delta : Q \times \Sigma_{\varepsilon} \times \Gamma_{\varepsilon} \rightarro
 
 $` \delta(q,a,c) = \{(r_{1},d),(r_{2},e)\} `$
 
+$\varepsilon$ means the machine can move without reading (left side) / writing (right side).
+
+From the above example, we have $\delta$ that applies to some state $q$, reading an input symbol $a$, popping $c$ from top of stack, and might end up going to state $r_{1}$, pushing $d$ to top of stack or state $r_{2}$, pushing $e$.
+
 Example: PDA for $` B = \{ww^{R} \mid w \in \{0,1\}^{*} \} `$
 
 Sample input: 0 1 1 1 1 0
