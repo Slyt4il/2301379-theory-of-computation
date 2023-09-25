@@ -18,11 +18,20 @@
   - [Converting DFAs to Regular Expressions](#converting-dfas-to-regular-expressions)
   - [Generalized NFA](#generalized-nfa)
   - [Converting GNFA to Regular Expressions](#converting-gnfa-to-regular-expressions)
-    - [Converting k tate GNFA to k-1 state GNFA](#converting-k-state-gnfa-to-k-1-state-gnfa)
+    - [Converting k state GNFA to k-1 state GNFA](#converting-k-state-gnfa-to-k-1-state-gnfa)
   - [Non-Regular Languages](#non-regular-languages)
   - [Method for Proving Non-regularity (Pumping Lemma)](#method-for-proving-non-regularity-pumping-lemma) 
   - [Context Free Grammars](#context-free-grammars)
+    - [Formal definition](#formal-definition-2)
+  - [Pushdown Automata](#pushdown-automata)
+    - [Formal definition](#formal-definition-3)
+  - [Converting CFGs to PDAs](#converting-cfgs-to-pdas)
+  - [Equivalence of CFGs and PDAs](#equivalence-of-cfgs-and-pdas)
+  - [Proving Languages not Context Free](#proving-languages-not-context-free)
+- [Midterm Quick Reference](#midterm-quick-reference)
+  - [Closure Properties](#closure-properties)
 
+# Midterm
 
 ## Finite Automata
 
@@ -259,7 +268,7 @@ $Q'$ is the set of subset of states of the original machine $M$.
 
 The accepting state $F'$ are all of the subsets that have at least one accepting state from the NFA.
 
-If $M$ has $n$ states, $M'$ has $2^{n}$ states.
+If $M$ has $n$ states, $M'$ has $2^{n}$ states by this construction.
 
 ![nfatodfa](images/nfa06.png)
 
@@ -502,6 +511,8 @@ $S \rightarrow R$
 
 $R \rightarrow \varepsilon$
 
+(written in one line: $S \rightarrow  0S1 \mid R$)
+
 **Rule**: Variable -> string of variables and terminals
 
 **Variables**: Symbols appearing on left-hand side of rule
@@ -517,7 +528,7 @@ $R \rightarrow \varepsilon$
 3. Result is the generated string
 4. $L(G)$ is the language of all generated strings.
 
-*Example of $G_{1}$ generating a string*
+Example of $G_{1}$ generating a string
 
 | Substitution Tree | Resulting string |
 | :---------------: | :--------------: |
@@ -531,8 +542,192 @@ $0011 \in L(G_{1})$
 
 $` L(G_{1}) = \{0^{k}1^{k} \mid k \geq 0\}`$
 
+### Formal definition
+
+**Definition**: A context free grammar (CFG) $G$ is a 4-tuple $(V, \Sigma, R, S)$
+
+$V$ = finite set of variables
+
+$\Sigma$ = finite set of terminal symbols
+
+$R$ = finite set of rules $` (V \rightarrow (V \cup \Sigma)^{*}) `$
+
+$S$ = start variable
+
+For $` u,v \in (V \cup \Sigma)^{*} `$ write
+
+1) $u \rightarrow v$ (u yields v) if can go from $u$ to $v$ with one substitution step in $G$
+2) $` u \overset{*}{\rightarrow} v `$ (u derives v) if can go from $u$ to $v$ with some number of substitution steps in $G$
+
+$` L(G) = \{w \mid w \in \Sigma^{*} \text{ and } S \overset{*}{\rightarrow} w\} `$
+
+**Definition**: $A$ is a context free language (CFL) if $A = L(G)$ for some CFG $G$.
+
+Example:
+
+$G_{2}$
+
+$E \rightarrow E+T \mid T$
+
+$T \rightarrow T \times F \mid F$
+
+$F \rightarrow (E) \mid a$
+
+$`V = \{E, T, F\} `$
+
+$`\Sigma = \{+, \times, (,), a\} `$
+
+$R$ = the 6 rules aboce
+
+$S = E$
+
+| Parse Tree        | Resulting string |
+| :---------------: | :--------------: |
+| **E**             | E                |
+| *E* + **T**       | E+T              |
+| *T* **T x F**     | T+TxF            |
+| *F* **F** **a**   | F+Fxa            |
+| *a* **a** **a**   | a+axa            |
+
+Generates $a + a \times a$, $(a+a) \times a$, $a$, $a+a+a$, etc.
+
+Observer that the parse tree contains additional information, such as the precedence of $\times$ over $+$.
+
+If a string has two different parse trees, then it is derived ambiguously, and we say that the grammar is *ambiguous*.
+
+$G_{3}$
+
+$E \rightarrow E+E \mid E \times E \mid (E) \mid a $
+
+Both $G_{2}$ and $G_{3}$ recognize the same language, i.e., $L(G_{2}) = L(G_{3})$.
+
+However, $G_{2}$ is an unambiguous CFG, and $G_{3}$ is ambiguous.
+
+## Pushdown Automata
+
+![pda](images/pda01.png)
+
+A pushdown automaton is similar to a finite automaton but has a stack, which is a form of auxiliary storage, attached to it.
+
+A finite automaton has a very limited amount of memory, making it unable to do simple tasks like counting. A pushdown automaton can use its stack as a kind of unbounded but restricted memory.
+
+PDA operates like an NFA except it can write/add (push) or read/remove (pop) symbols from the top of stack.
+
+Example:
+
+PDA for $`D = \{0^{k}1^{k} \mid k \geq 0\} `$
+
+1) Read 0s from input, push onto stack until read 1.
+2) Read 1s from input, while popping 0s from stack.
+3) Enter accept state if stack is empty. (acceptance only at the end of input)
+
+### Formal definition
+
+**Definition**: A pushdown automaton (PDA) is a 7-tuple $(Q, \Sigma, \Gamma, \delta, q_{0}, Z_{0}, F)$
+
+$\Sigma$ = input alphabet
+
+$\Gamma$ = stack alphabet
+
+$Z_{0}$ = initial stack symbol
+
+$` \delta : Q \times \Sigma_{\varepsilon} \times \Gamma_{\varepsilon} \rightarrow \mathcal{P}(Q \times \Gamma_{\varepsilon})`$
+
+$` \delta(q,a,c) = \{(r_{1},d),(r_{2},e)\} `$
+
+Example: PDA for $` B = \{ww^{R} \mid w \in \{0,1\}^{*} \} `$
+
+Sample input: 0 1 1 1 1 0
+
+1) Read and push input symbols. Nondeterministically either repeat or go to (2)
+2) Read input symbols and pop stack symbols, compare. If ever disagrees, then thread rejects.
+3) Enter accept state if stack is empty.
+
+The nondeterministic forks replicate the stack.
+
+This language requires nondeterminism. Our PDA model in nondeterministic.
+
+## Converting CFGs to PDAs
+
+**Theorem**: If $A$ is a CFL, then some PDA recognizes $A$
+
+**Proof**: Convert $A$'s CFG to a PDA
+
+**IDEA**: PDA begins with starting variable and guesses substitutions. It keeps intermediate generated strings on stack. When done, compare with input.
+
+**Problem**: We cannot access below the top of stack.
+
+**Solution**: Only substitute variables when on top of the stack. If a terminal is on the top of stack, pop it and compare with input. Reject if disagree.
+
+![cfgtopda](images/pda02.png)
+
+**Theorem**: If $A$ is a CFL, then some PDA recognizes $A$
+
+**Proof construction**:
+
+Convert the CFG for $A$ to the following PDA.
+
+1) Push the start symbol on the stack.
+2) If the top of stack is a **variable**, replace it with right hand side of rule (nondeterministic choice). If it's a **terminal** symbol, pop it and match with next input symbol.
+3) If the stack is empty, accept.
+
+## Equivalence of CFGs and PDAs
+
+**Theorem**: $A$ is a CFL $\iff$ some PDA recognizes $A$
+
+**Corollaries**:
+
+- Every regular language is a CFL.
+- If $A$ is a CFL and $B$ is regular then $A \cap B$ is a CFL. *While reading the input, the finite control of the PDA for A simulates the DFA for B.*
+
+**Note 1**: If $A$ and $B$ are CFLs then $A \cap B$ may not be a CFL. Therefore the class of CFLs is not closed under intersection.
+
+**Note 2**: The class of CFLs is closed under concatenation, union, star.
+
+## Proving Languages not Context Free
+
+Let $` B = \{0^{k}1^{k}2^{k} \mid k \geq 0\} `$
+
+Show that $B$ is not a CFL.
+
+**Pumping Lemma for CFLs**: For every CFL $A$, there is a $p$ such that if $s \in A$ and $\left | s \right | \geq p$ then $s = uvxyz$ where
+
+1) $uv^{i}xy^{i}z \in A$ for all $i \geq 0$
+2) $vy \neq \varepsilon$
+3) $\left | vxy \right | \leq p$
+
+*May be continued at a later date as 2301379 does not seem to cover this.*
+
 ---
 
-Notes for Chulalongkorn University 2301379 Theory of Computation (2566/1) with additional materials from:
+# Midterm Quick Reference
+
+Every regular language is a context-free language. DFAs/NFAs are just PDAs that do not use their stack.
+
+## Closure Properties
+
+**Regular Language**
+
+Union, Concatenation, Kleene Star, Intersection, Complement, Reversal, Difference
+
+NOT: Intersection with CFL, Complementation with CFL
+
+**Context Free Language**
+
+Union, Concatenation, Kleene Star, Reversal
+
+NOT: Intersection, Complementation, Difference
+
+**HOWEVER:**
+
+$\text{CFL} \cap \text{RL}$ is context-free.
+
+$\text{CFL} - \text{RL}$ is context-free.
+
+$\text{RL} - \text{CFL}$ is not always context-free.
+
+---
+
+Notes for Chulalongkorn University 2301379 Theory of Computation (2566/1) based on lecture by
 
 Prof. Michael Sipser. Theory Of Computation. Fall 2020. Massachusetts Institute of Technology: MIT OpenCouseWare, https://ocw.mit.edu/. License: Creative Commons BY-NC-SA.
