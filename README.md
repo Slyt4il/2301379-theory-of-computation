@@ -13,7 +13,15 @@
   - [Nondeterministic Finite Automata](#nondeterministic-finite-automata)
     - [Formal definition](#formal-definition-1)
   - [Converting NFAs to DFAs](#converting-nfas-to-dfas)
+  - [Return to Closure Properties](#return-to-closure-properties)
   - [Converting Regular Expressions to NFA](#converting-regular-expressions-to-nfa)
+  - [Converting DFAs to Regular Expressions](#converting-dfas-to-regular-expressions)
+  - [Generalized NFA](#generalized-nfa)
+  - [Converting GNFA to Regular Expressions](#converting-gnfa-to-regular-expressions)
+    - [Converting k tate GNFA to k-1 state GNFA](#converting-k-state-gnfa-to-k-1-state-gnfa)
+  - [Non-Regular Languages](#non-regular-languages)
+  - [Method for Proving Non-regularity (Pumping Lemma)](#method-for-proving-non-regularity-pumping-lemma) 
+  - [Context Free Grammars](#context-free-grammars)
 
 
 ## Finite Automata
@@ -155,7 +163,7 @@ $M$ should accept input $w$ if either $M_{1}$ or $M_{2}$ accept $w$.
 
 **Components of $M$**:
 
-$Q = Q_{1} \times Q_{2} = \\{(q_{1}, q_{2}) \mid q_{1} \in Q_{1} \text{ and } q_{2} \in Q_{2}\\}$
+$Q = Q_{1} \times Q_{2} = \{(q_{1}, q_{2}) \mid q_{1} \in Q_{1} \text{ and } q_{2} \in Q_{2}\}$
 
 $q_{0} = (q_{1}, q_{2})$
 
@@ -247,7 +255,15 @@ $` q'_{0} = \{q_{0}\} `$
 
 $` F' = \{R \in Q' | R \text{ intersects } F\} `$
 
-**Return to Closure Properties**
+$Q'$ is the set of subset of states of the original machine $M$.
+
+The accepting state $F'$ are all of the subsets that have at least one accepting state from the NFA.
+
+If $M$ has $n$ states, $M'$ has $2^{n}$ states.
+
+![nfatodfa](images/nfa06.png)
+
+## Return to Closure Properties
 
 **Recall Theorem**: If $A_{1}$ and $A_{2}$ are regular languages, so is $A_{1} \cup A_{2}$ *(closure under union)*
 
@@ -298,6 +314,222 @@ $M$ should accept input $w$ if $w = x_{1}x_{2} \ldots x_{k}$ where $k \geq 0$ an
 Convert $R$ to equivalent of NFA $M$:
 
 ![regextonfa](images/nfa05.png)
+
+## Converting DFAs to Regular Expressions
+
+**Theorem**: If $A$ is regular, then $A = L(R)$ for some regular expression $R$
+
+**Proof**:
+
+Give conversion DFA $M \rightarrow R$
+
+Use GNFA below.
+
+## Generalized NFA
+
+**Definition**: A Generalized Nondeterministic Finite Automaton (GNFA) is similar to an NFA, but allows regular expressions as transition labels.
+
+![gnfa](images/gnfa01.png)
+
+## Converting GNFA to Regular Expressions
+
+**Lemma**: Every GNFA $G$ has an equivalent regular expression $R$
+
+**Proof**: By induction on the number of states $k$ of $G$
+
+*Basis* (k = 2):
+
+![specialg](images/gnfa02.png)
+
+Let $R = r$
+
+*Induction step* (k > 2): Assume Lemma true for $k-1$ states and prove for $k$ states
+
+**IDEA**: Convert $k$-state GNFA to equivalent $(k-1)$-state GNFA
+
+### Converting k state GNFA to k-1 state GNFA
+
+1. Pick any state $x$ except the start and accept states.
+2. Remove $x$
+3. Repair the damage by recovering all paths that went through $x$
+4. Make the indicated change for each pair of states $q_{i},q_{j}$ 
+
+![gnfaconversion](images/gnfa03.png)
+
+DFAs are a type of GNFAs thus DFAs and regular expressions are equivalent.
+
+## Non-Regular Languages
+
+**How to show a language is not regular?**
+
+- *To show a language is regular, we give a DFA.*
+- To show a language is ***not*** regular, we must give a proof.
+- It is not enough to say that you couldn't find a DFA for it, therefore the language isn't regular.
+
+Examples: Assume $` \Sigma = \{0,1\} `$
+
+Let $` B = \{w \mid w \text{ has equal numbers of 0s and 1s } \} `$
+
+*Intuition*: $B$ is not regular because DFAs cannot count unboundedly.
+
+Let $` C = \{ w \mid w \text{ has equal numbers of 01 and 10 substrings } \} `$
+
+$0101 \notin C$
+
+$0110 \in C$
+
+*Intuition*: $C$ is not regular because DFAs cannot count unboundedly.
+
+**However $C$ is regular!**
+
+**Sometimes intuition can be wrong, you need to give a proof.**
+
+## Method for Proving Non-regularity (Pumping Lemma)
+
+**Pumping Lemma**: For every regular language $A$, there is a number $p$ (the "pumping length") such that if $s \in A \text{ and } \left | s \right | \geq p \text { then } s = xyz$ where
+
+1. $xy^{i}z \in A$ for all $i \geq 0$; $y^{i} = yy \ldots y_{i}$
+2. $y \neq \varepsilon$
+3. $\left | xy \right | \leq p$
+
+Informally: $A$ is regular -> every long string in $A$ can be pumped and the result stays in $A$.
+
+**Proof**:
+
+Let DFA $M$ recognize $A$.
+
+Let $p$ be the number of states in $M$. Pick $s \in A$ where $\left | s \right | \geq p$
+
+![pumpinglemma](images/pumping01.png)
+
+The Pumping Lemma depends on the fact that if $M$ has $p$ states and it runs for more than $p$ steps then $M$ will enter some state at least twice.
+
+This is known as the ***Pigeonhole Principle***.
+
+**Example 1**
+
+Let $` D = \{0^{k}1^{k} \mid k \geq 0\} `$
+
+**Show**: $D$ is not regular
+
+**Proof by contradiction**:
+
+Assume that $D$ is regular.
+
+The pumping lemma gives $p$ as above.
+
+Let $s = 0^{p}1^{p} \in D$
+
+$s = 000 \ldots 0001111 \ldots 111$ (a bunch of 0s followed by an equal number of 1s)
+
+The string is in $D$ because $D$ is strings of that form.
+
+The string is longer than $p$ because it is of length $2p$.
+
+Pumping Lemma says that we can divide $s = xyz$ satisfying the 3 conditions.
+
+![pumpinglemma](images/pumping02.png)
+
+The first two pieces we cut lie in the first $p$ symbols of $s$ at most $p$ long. So $x$ and $y$ together do not extend beyond the first half of $s$ (since $s$ is of length $2p$). As such, $x$ and $y$ are going to be all zeroes. $z$ might have some zeroes, and will have the rest of the ones.
+
+Pumping Lemma says that if we cut it up this way, we can repeat $y$ as many times as we like while still staying in the language.
+
+But $xyyz$ has too many zeroes since $y$ is all zeroes. The resulting string is no longer of the form $0^{k}1^{k}$ as there are more zeroes than ones.
+
+$xyyz \notin D$ contradicts the pumping lemma.
+
+Therefore our assumption that $D$ is regular is false.
+
+We conclude that $D$ is not regular.
+
+**Example 2**
+
+Let $` F = \{ww \mid w \in \Sigma^{*} \} `$
+
+Say $` \Sigma^{*} = \{ 0,1 \}`$
+
+**Show**: $F$ is not regular
+
+**Proof by contradiction**:
+
+Assume that $F$ is regular.
+
+The pumping lemma gives $p$ as above. Need to choose $s \in F$.
+
+Try $s = 0^{p}0^{p} \in F$
+
+$s = 000 \ldots 000000 \dots 000$
+
+Let $y = 00$
+
+$s$ can be pumped. Let's try another $s$ since we haven't learned anything new.
+
+Try $s = 0^{p}10^{p}1 \in F$
+
+$s = 000 \ldots 001000 \ldots 001$
+
+The first two pieces are all zeroes. So when you repeat $y$, you will no longer have two copies of the same string.
+
+$xyyz \notin F$
+
+There is a contradiction. Therefore $F$ is not regular.
+
+**Example 3**
+
+**Variant**: Combine closure properties with the Pumping Lemma.
+
+Let $` B = \{ w \mid w \text{ has equal numbers of 0s and 1s } \} `$
+
+**Show**: $B$ is not regular.
+
+**Proof by contradiction**:
+
+Assume that $B$ is regular.
+
+We know that $` 0^{*}1^{*} `$ is regular so $` B \cap 0^{*}1^{*} `$ is regular (closure under intersection).
+
+But $` D = B \cap 0^{*}1^{*} `$ and we already showed that $D$ is not regular, so there is a contradiction. *(Example 1)*
+
+Therefore, our assumption is false, and $B$ is not regular.
+
+## Context Free Grammars
+
+$G_{1}$
+
+$S \rightarrow  0S1$
+
+$S \rightarrow R$
+
+$R \rightarrow \varepsilon$
+
+**Rule**: Variable -> string of variables and terminals
+
+**Variables**: Symbols appearing on left-hand side of rule
+
+**Terminals**: Symbols appearing only on right-hand side, excluding $\varepsilon$
+
+**Start Variable**: Top left symbol
+
+**Grammars generate strings**
+
+1. Write down start variable
+2. Replace any variable according to a rule. (When you see an $S$ replace it with $0S1$ or $R$). Repeat until only terminals remain.
+3. Result is the generated string
+4. $L(G)$ is the language of all generated strings.
+
+*Example of $G_{1}$ generating a string*
+
+| Substitution Tree | Resulting string |
+| :---------------: | :--------------: |
+| **S**             | S                |
+| 0 **S** 1         | 0S1              |
+| 0 0 **S** 1 1     | 00S11            |
+| 0 0 **R** 1 1     | 00R11            |
+| 0 0 ε 1 1         | 0011             |
+
+$0011 \in L(G_{1})$
+
+$` L(G_{1}) = \{0^{k}1^{k} \mid k \geq 0\}`$
 
 ---
 
